@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player Hero Section</title>
+    <style>
+       /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1DB954, #191414);
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 2.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    width: 90%;
+    max-width: 800px;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.hero h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    background: -webkit-linear-gradient(#1DB954, #6BE880);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #ffffffb3;
+    line-height: 1.5;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-buttons a {
+    text-decoration: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hero-buttons a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.hero-buttons a:hover::before {
+    opacity: 1;
+}
+
+.hero-buttons .btn-primary {
+    background-color: #1DB954;
+    color: #121212;
+}
+
+.hero-buttons .btn-primary:hover {
+    background-color: #17a743;
+}
+
+.hero-buttons .btn-secondary {
+    background-color: #ffffff;
+    color: #121212;
+}
+
+.hero-buttons .btn-secondary:hover {
+    background-color: #e6e6e6;
+}
+
+/* Music Player */
+.music-player {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    background: #1DB954;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.music-player h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.playlist {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.playlist ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.playlist ul li {
+    background: #ffffff;
+    color: #121212;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.playlist ul li:hover {
+    background: #e6e6e6;
+}
+
+.playlist ul li.active {
+    background: #17a743;
+    color: #ffffff;
+}
+
+audio {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.music-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.music-controls button {
+    background: #ffffff;
+    color: #121212;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.music-controls button:hover {
+    background: #e6e6e6;
+}
+
+.volume-slider {
+    width: 100px;
+}
+
+.seek-bar {
+    width: 100%;
+    appearance: none;
+    height: 5px;
+    background: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem 0;
+}
+
+.seek-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #17a743;
+}
+
+.btn-close {
+    margin-top: 1rem;
+    background-color: #e6e6e6;
+    color: #121212;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-close:hover {
+    background-color: #cccccc;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+
+/* Mobile Screens (max-width: 768px) */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons a {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .music-player {
+        padding: 1.5rem;
+    }
+
+    .music-player h2 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Laptop Screens (769px to 1200px) */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+    }
+
+    .music-player {
+        padding: 1.8rem;
+    }
+
+    .music-player h2 {
+        font-size: 1.4rem;
+    }
+}
+
+    </style>
+    <script>
+        let currentTrack = 0;
+        let isShuffle = false;
+        let isRepeat = false;
+
+        const tracks = [
+            {
+                name: "Anegan Thodu Vaanam ",
+                src: "Anegan - Thodu Vaanam Video _ Dhanush _ Harris Jayaraj.mp3" 
+            },
+            {
+                name: "JAILER Kaavaalaa",
+                src: "JAILER - Kaavaalaa Lyric Video _ Superstar Rajinikanth _ Sun Pictures _ Anirudh _ Nelson _ Tamannaah (320 kbps).mp3"
+            },
+            {
+                name: "Ethra Naal- Sulaikha Manzil",
+                src: "Ethra Naal - Sulaikha Manzil (DJ Nitrixx Remix) • Malayalam Remix 2023 (320 kbps).mp3"
+            },
+            {
+                name: "Guli Mata - Saad Lamjarred",
+                src: "Guli Mata - Saad Lamjarred _ Shreya Ghoshal _ Jennifer Winget _ Anshul Garg.mp3"
+            },
+            {
+                name: "MERE SAPNO KI RANI",
+                src: "MERE SAPNO KI RANI  _ Dance Cover  _ The Vishal yadav Choreography (320 kbps).mp3"
+            },
+            {
+                name: "Mizhiyil Mizhiyil",
+                src: "Mizhiyil Mizhiyil _ Maayabazar _ Mammootty _ Sheela Koul _ Rahul Raj - HD Video Song (320 kbps).mp3"
+            },
+            {
+                name: "Neela Nilave",
+                src: "Neela Nilave Bass Boosted Song  RDX  Kapil Kapilan  Sam CS  Shane Nigam, Antony Saregama.mp3"
+            },
+            {
+                name: "Toh Phir Aao ",
+                src: "Toh Phir Aao Musko Song (Awarapan Movie) Original  Full 4K HD Video song (320 kbps).mp3"
+            },
+            {
+                name: "Va Va MulleNew  ",
+                src: "Va Va MulleNew Music VideoSajeer koppamNysha fathima.mp3"
+            },
+            {
+                name: "What Jhumka  ",
+                src: "What Jhumka_ _ Rocky Aur Rani Kii Prem Kahaani _ Ranveer _ Alia _ Pritam _ Amitabh _ Arijit _ Jonita (320 kbps).mp3"
+            },
+            {
+                name: "Poomuthole Nee Erinja  ",
+                src: "പമതതള... Poomuthole Nee ErinjaMalayalam Movie Song Cover Song Sajeer Koppam Cover Song.mp3"
+            },
+        ];
+
+        function startListening() {
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.music-player').style.display = 'flex';
+            loadTrack(currentTrack);
+        }
+
+        function closePlayer() {
+            document.querySelector('.music-player').style.display = 'none';
+            document.querySelector('.hero').style.display = 'flex';
+        }
+
+        function loadTrack(index) {
+            const audio = document.querySelector('audio');
+            const trackTitle = document.querySelector('.music-player h2');
+            const playlistItems = document.querySelectorAll('.playlist ul li');
+
+            trackTitle.textContent = `Now Playing: ${tracks[index].name}`;
+            audio.src = tracks[index].src;
+
+            playlistItems.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+        }
+
+        function playNext() {
+            currentTrack = isShuffle ? Math.floor(Math.random() * tracks.length) : (currentTrack + 1) % tracks.length;
+            loadTrack(currentTrack);
+        }
+
+        function playPrevious() {
+            currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+            loadTrack(currentTrack);
+        }
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            alert(`Shuffle is now ${isShuffle ? 'ON' : 'OFF'}`);
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            alert(`Repeat is now ${isRepeat ? 'ON' : 'OFF'}`);
+        }
+
+        function adjustVolume(value) {
+            const audio = document.querySelector('audio');
+            audio.volume = value / 100;
+        }
+
+        function seekAudio(value) {
+            const audio = document.querySelector('audio');
+            audio.currentTime = audio.duration * (value / 100);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const musicPlayer = document.querySelector('.music-player');
+
+            if (body.style.backgroundColor === 'white') {
+                body.style.backgroundColor = '#121212';
+                body.style.color = '#ffffff';
+                musicPlayer.style.backgroundColor = '#1DB954';
+            } else {
+                body.style.backgroundColor = 'white';
+                body.style.color = '#000000';
+                musicPlayer.style.backgroundColor = '#e6e6e6';
+            }
+        }
+    </script>
+</head>
+<body>
+    <section class="hero">
+        <h1>Your Soundtrack, Anytime, Anywhere</h1>
+        <p>Discover millions of tracks, create playlists, and dive into an immersive music experience.</p>
+        <div class="hero-buttons">
+            <a href="#" class="btn-primary" onclick="startListening()">Start Listening</a>
+            <a href="#" class="btn-secondary">Explore Features</a>
+        </div>
+    </section>
+
+    <!-- Music Player Section -->
+    <div class="music-player">
+        <h2>Now Playing: </h2>
+        <div class="playlist">
+            <ul>
+                <li onclick="loadTrack(0)">Anegan Thodu Vaanam</li>
+                <li onclick="loadTrack(1)">JAILER Kaavaalaa</li>
+                <li onclick="loadTrack(2)">Ethra Naal- Sulaikha Manzil</li>
+                <li onclick="loadTrack(2)">Guli Mata - Saad Lamjarred</li>
+                <li onclick="loadTrack(2)">MERE SAPNO KI RANI</li>
+                <li onclick="loadTrack(2)">Mizhiyil Mizhiyil</li>
+                <li onclick="loadTrack(2)">Neela Nilave</li>
+                <li onclick="loadTrack(2)">Toh Phir Aao</li>
+                <li onclick="loadTrack(2)">Va Va MulleNew </li>
+                <li onclick="loadTrack(2)">What Jhumka</li>
+                <li onclick="loadTrack(2)">Poomuthole Nee Erinja</li>
+            </ul>
+        </div>
+        <audio controls></audio>
+        <input type="range" class="seek-bar" min="0" max="100" step="1" oninput="seekAudio(this.value)">
+        <div class="music-controls">
+            <button onclick="playPrevious()">Previous</button>
+            <button onclick="toggleShuffle()">Shuffle</button>
+            <button onclick="toggleRepeat()">Repeat</button>
+            <button onclick="playNext()">Next</button>
+            <input type="range" class="volume-slider" min="0" max="100" step="1" value="100" oninput="adjustVolume(this.value)">
+        </div>
+      
+       
+    </div>
+</body>
+</html>
